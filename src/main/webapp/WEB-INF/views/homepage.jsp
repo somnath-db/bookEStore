@@ -38,8 +38,7 @@ h3 {
 </head>
 
 <body>
-
-	<nav class="navbar navbar-expand-lg navbar navbar-dark bg-dark">
+<nav class="navbar navbar-expand-lg navbar navbar-dark bg-dark">
 		<div class="container-fluid">
 			<a class="navbar-brand" href="#">
 			<img src="https://www.pngall.com/wp-content/uploads/2018/05/Books-PNG.png" alt="" width="30" height="24" class="d-inline-block align-text-top">
@@ -55,6 +54,7 @@ h3 {
 					<li class="nav-item"><a class="nav-link active"
 						aria-current="page" href="/home">Home</a></li>
 					<li class="nav-item"><a class="nav-link" href="/cart">Cart</a></li>
+					<li class="nav-item"><a class="nav-link" href="/logout">Logout</a></li>
 				</ul>
 				<form class="d-flex" action="/searchhandler" method="GET">
 					<select id="filter" name="filter">
@@ -68,6 +68,8 @@ h3 {
 		</div>
 	</nav>
 
+	
+	
 	<h3>Books Available</h3>
 	<div class="container-md main">
 		<div class="row row-cols-1 row-cols-md-3 g-4">
@@ -90,7 +92,7 @@ h3 {
 								<p class="card-text">
 									Quantity: <span th:text="${book.quantity}"></span>
 								</p>
-								<a href="#" class="btn btn-primary">Add to Cart</a>
+								<a th:href="@{/cart/{barcode}(barcode=${book.barcode})}" class="btn btn-primary">Add to Cart</a>
 							</div>
 						</div>
 					</div>

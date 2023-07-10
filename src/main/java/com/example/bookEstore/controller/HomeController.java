@@ -12,6 +12,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.example.bookEstore.model.Book;
 import com.example.bookEstore.service.BookService;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
+
 @Controller
 public class HomeController {
 	
@@ -21,7 +24,12 @@ public class HomeController {
 	private BookService bookService;
 	
 	@RequestMapping("/home")
-	public String home(Model model) {
+	public String home(Model model, HttpServletRequest request) {
+		HttpSession session= request.getSession();
+		String email=(String)session.getAttribute("email");
+		if(email==null) {
+			return "redirect:/login";
+		}
 		
 		LOGGER.info("Sucessfully retuned homepage");
 		

@@ -14,6 +14,9 @@ import org.springframework.ui.Model;
 import com.example.bookEstore.model.Book;
 import com.example.bookEstore.service.BookService;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
+
 @Controller
 public class SearchController {
 
@@ -23,7 +26,12 @@ public class SearchController {
 	private BookService bookService;
 	
 	@RequestMapping("/search")
-	public String search() {
+	public String search(HttpServletRequest request) {
+		HttpSession session= request.getSession();
+		String email=(String)session.getAttribute("email");
+		if(email==null) {
+			return "redirect:/login";
+		}
 		LOGGER.info("Sucessfully retuned searchpage");
 		return "searchpage";
 	}
@@ -33,9 +41,14 @@ public class SearchController {
 	public String searchhandler(
 			Model model,
 			@RequestParam("filter") String filter, 
-			@RequestParam("query") String query
+			@RequestParam("query") String query,
+			HttpServletRequest request
 			) {
-		
+		HttpSession session= request.getSession();
+		String email=(String)session.getAttribute("email");
+		if(email==null) {
+			return "redirect:/login";
+		}
 		System.out.println(filter);
 		List<Book> bookList= new ArrayList<>();
 		
