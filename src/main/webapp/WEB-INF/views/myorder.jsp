@@ -3,7 +3,7 @@
 
 <head>
 <meta charset="ISO-8859-1">
-<title>Cart</title>
+<title>My Orders</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link
@@ -58,7 +58,6 @@ h3 {
 					<li class="nav-item"><a class="nav-link active"
 						aria-current="page" href="/home">Home</a></li>
 					<li class="nav-item"><a class="nav-link" href="/cart">Cart</a></li>
-					<li class="nav-item"><a class="nav-link" href="/vieworder">My Orders</a></li>
 					<li class="nav-item"><a class="nav-link" href="/logout">Logout</a></li>
 				</ul>
 				<form class="d-flex" action="/searchhandler" method="GET">
@@ -73,30 +72,28 @@ h3 {
 		</div>
 	</nav>
 
-	<h3>Cart</h3>
+	<h3>Orders</h3>
 	<div class="container-sm">
 		<table class="table table-striped table-borderless align-middle table-responsive">
 			<tbody>
-				<tr th:each="book : ${booklist}">
+				
+				<tr th:each="order : ${orderlist}">
 					<td><img id="imgBook"
 						src="https://pngimg.com/d/book_PNG51088.png"
 						class="d-inline-block" width="80" height="80" alt="Book Image"></td>
-					<td th:text="${book.name}"></td>
-					<td th:text="${book.author}"></td>
-					<td th:text="${book.price}"></td>
-					<td th:text="${book.quantity}"></td>
-					<td><a th:href="@{/remove/{barcode}(barcode=${book.barcode})}"
-						class="btn btn-danger">Delete</a></td>
+					<td th:text="${order.barcode}"></td>
+					<td th:text="${order.bookName}"></td>
+					<td th:text="${order.author}"></td>
+					<td th:text="${order.quantity}"></td>
+					<td >Order date :<span th:text="${order.orderDate}"></span></td>
+					<td >Delivery date :<span th:text="${order.deliveryDate}"></span></td>
+					
 				</tr>
+				
 			</tbody>
 		</table>
 	</div>
-	<div class="text-center">
-		<p id="price">
-			Total Price: <span th:text="${totalCartPrice}"></span>
-		</p>
-		<a class="btn d-grid  col-6 btn-primary mx-auto" href="/placeorder">Place Order</a>
-	</div>
+	
 
 	<script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"

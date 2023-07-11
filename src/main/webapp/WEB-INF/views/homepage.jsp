@@ -54,6 +54,7 @@ h3 {
 					<li class="nav-item"><a class="nav-link active"
 						aria-current="page" href="/home">Home</a></li>
 					<li class="nav-item"><a class="nav-link" href="/cart">Cart</a></li>
+					<li class="nav-item"><a class="nav-link" href="/vieworder">My Orders</a></li>
 					<li class="nav-item"><a class="nav-link" href="/logout">Logout</a></li>
 				</ul>
 				<form class="d-flex" action="/searchhandler" method="GET">
@@ -70,7 +71,7 @@ h3 {
 
 	
 	
-	<h3>Books Available</h3>
+	<h3 class="text-center">Books Available</h3>
 	<div class="container-md main">
 		<div class="row row-cols-1 row-cols-md-3 g-4">
 			<div class="col" th:each="book : ${booklist}">
