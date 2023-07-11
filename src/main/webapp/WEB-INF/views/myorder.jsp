@@ -86,7 +86,10 @@ h3 {
 					<td th:text="${order.author}"></td>
 					<td th:text="${order.quantity}"></td>
 					<td >Order date :<span th:text="${order.orderDate}"></span></td>
+					<td >Order time :<span th:text="${order.orderTime}"></span></td>
 					<td >Delivery date :<span th:text="${order.deliveryDate}"></span></td>
+					<td><a th:href="@{/cancel/{barcode}/{orderdate}/{ordertime}(barcode=${order.barcode},orderdate=${order.orderDate},ordertime=${order.orderTime})}"
+						class="btn btn-danger">Cancel Item</a></td>
 					
 				</tr>
 				

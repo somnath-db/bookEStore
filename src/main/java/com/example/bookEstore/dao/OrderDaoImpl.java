@@ -1,5 +1,6 @@
 package com.example.bookEstore.dao;
 
+import java.sql.Date;
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -13,8 +14,9 @@ import com.example.bookEstore.model.Order;
 @Repository
 public class OrderDaoImpl implements OrderDao {
 	
-	private final static String SQL_PLACE_ORDER= "insert into orderbook (email,barcode,bookname,author,quantity,orderdate,deliverydate) select email ,b.barcode,b.bookname, b.author, count(c.quantity),current_date(),adddate(current_date(),7) as deliverydate  from book b inner join central_cart c on c.barcode=b.barcode group by b.barcode, b.bookname, b.author,email having c.email=?";
-	private final static String SQL_VIEW_ORDER="select barcode,bookname,author,sum(quantity)as quantity,email,orderdate,deliverydate from orderbook group by  barcode,bookname,author,email,orderdate,deliverydate having email=?";
+	private final static String SQL_PLACE_ORDER= "insert into orderbook (email,barcode,bookname,author,quantity,orderdate,ordertime,deliverydate) select email ,b.barcode,b.bookname, b.author, count(c.quantity),current_date(),CAST(CURRENT_TIMESTAMP() AS time),adddate(current_date(),7)  from book b inner join central_cart c on c.barcode=b.barcode group by b.barcode, b.bookname, b.author,email having c.email=?";
+	private final static String SQL_VIEW_ORDER="select barcode,bookname,author,sum(quantity)as quantity,email,orderdate,ordertime,deliverydate from orderbook group by  barcode,bookname,author,email,orderdate,ordertime,deliverydate having email=?";
+	private final static String SQL_CANCEL_ITEM="delete from orderbook where email=? and orderdate=? and ordertime=? and barcode=?";
 	
 	private JdbcTemplate jdbcTemplate;
 
@@ -39,9 +41,16 @@ public class OrderDaoImpl implements OrderDao {
 																		order.setOrderValue(0.0);
 																		order.setOrderDate(rs.getDate("orderdate"));
 																		order.setDeliveryDate(rs.getDate("deliverydate"));
+																		order.setOrderTime(rs.getString("ordertime"));
 																		return order;
 																		},email);
 		return orders;
+	}
+	@Override
+	public int cancelItem(String email, Date orderDate, String orderTime, String barcode) {
+		
+		int noOfRow = jdbcTemplate.update(SQL_CANCEL_ITEM,email,orderDate,orderTime,barcode);
+		return noOfRow;
 	}
 
 }
