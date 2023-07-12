@@ -26,15 +26,24 @@ h3 {
 	font-size: 30px;
 }
 
+h5 {
+	font-weight: bold;
+	font-size: 20px;
+}
 
 #filter {
 	margin-right: 2%;
 	text-align: center;
 }
-#price{
+
+#price {
 	text-align: center;
 	font-size: 20px;
 }
+#imgBook{
+	margin-left: 20%;
+}
+
 </style>
 </head>
 
@@ -58,7 +67,7 @@ h3 {
 					<li class="nav-item"><a class="nav-link active"
 						aria-current="page" href="/home">Home</a></li>
 					<li class="nav-item"><a class="nav-link" href="/cart">Cart</a></li>
-					<li class="nav-item"><a class="nav-link" href="/logout">Logout</a></li>
+					<li class="nav-item"><a class="nav-link" href="/logout" onclick="alert('logged out sucessfully')">Logout</a></li>
 				</ul>
 				<form class="d-flex" action="/searchhandler" method="GET">
 					<select id="filter" name="filter">
@@ -74,29 +83,45 @@ h3 {
 
 	<h3>Orders</h3>
 	<div class="container-sm">
-		<table class="table table-striped table-borderless align-middle table-responsive">
-			<tbody>
-				
-				<tr th:each="order : ${orderlist}">
-					<td><img id="imgBook"
+		<table class=" table-striped table table-borderless align-middle table-responsive ">
+			<tr th:each="order : ${orderlist}">
+			
+				<td><img id="imgBook"
 						src="https://pngimg.com/d/book_PNG51088.png"
 						class="d-inline-block" width="80" height="80" alt="Book Image"></td>
-					<td th:text="${order.barcode}"></td>
-					<td th:text="${order.bookName}"></td>
-					<td th:text="${order.author}"></td>
-					<td th:text="${order.quantity}"></td>
-					<td >Order date :<span th:text="${order.orderDate}"></span></td>
-					<td >Order time :<span th:text="${order.orderTime}"></span></td>
-					<td >Delivery date :<span th:text="${order.deliveryDate}"></span></td>
-					<td><a th:href="@{/cancel/{barcode}/{orderdate}/{ordertime}(barcode=${order.barcode},orderdate=${order.orderDate},ordertime=${order.orderTime})}"
-						class="btn btn-danger">Cancel Item</a></td>
-					
-				</tr>
+						
+						
+				<td>
+					<ol class="list-group list-group-numbered">
+						<li class=" d-flex justify-content-between align-items-start">
+							<div class="ms-2 me-auto">
+								<div>
+									<h5 th:text="${order.bookName}"></h5>
+								</div>
+								Author : <span th:text="${order.author}"></span><br>
+								Quantity : <span th:text="${order.quantity}"></span><br>
+								Order Date : <span th:text="${order.orderDate}"></span><br>
+								Order Time : <span th:text="${order.orderTime}"></span><br>
+								Delivery Date : <span th:text="${order.deliveryDate}"></span>
+							</div>
+						</li>
+					</ol>
+				</td>
 				
-			</tbody>
+				<td>
+					 <a
+						th:href="@{/cancel/{barcode}/{orderdate}/{ordertime}(barcode=${order.barcode},orderdate=${order.orderDate},ordertime=${order.orderTime})}"
+						th:classappend="${order.isDelivered}? 'disabled'" onclick="alert('order canceled for the item')"
+						class="btn btn-danger">Cancel Item</a>
+				</td>
+				
+						
+			</tr>
+
 		</table>
+
 	</div>
-	
+
 
 	<script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"

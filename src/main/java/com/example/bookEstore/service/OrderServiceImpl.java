@@ -27,7 +27,9 @@ public class OrderServiceImpl implements OrderService {
 	@Override
 	public int placeOrder(String email) {
 		int noOfRow = orderDao.placeOrder(email);
+		orderDao.updateQuantityAfterOrderPlace(email);
 		centralCartDao.deleteAllFromCart(email);
+		
 		return noOfRow ;
 	}
 	@Override

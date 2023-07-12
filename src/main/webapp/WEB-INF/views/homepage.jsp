@@ -55,7 +55,7 @@ h3 {
 						aria-current="page" href="/home">Home</a></li>
 					<li class="nav-item"><a class="nav-link" href="/cart">Cart</a></li>
 					<li class="nav-item"><a class="nav-link" href="/vieworder">My Orders</a></li>
-					<li class="nav-item"><a class="nav-link" href="/logout">Logout</a></li>
+					<li class="nav-item"><a class="nav-link" href="/logout" onclick="alert('logged out sucessfully')">Logout</a></li>
 				</ul>
 				<form class="d-flex" action="/searchhandler" method="GET">
 					<select id="filter" name="filter">
@@ -93,7 +93,7 @@ h3 {
 								<p class="card-text">
 									Quantity: <span th:text="${book.quantity}"></span>
 								</p>
-								<a th:href="@{/cart/{barcode}(barcode=${book.barcode})}" class="btn btn-primary">Add to Cart</a>
+								<a th:href="@{/cart/{barcode}(barcode=${book.barcode})}" class="btn btn-primary" onclick="alert('Item added to cart')">Add to Cart</a>
 							</div>
 						</div>
 					</div>
