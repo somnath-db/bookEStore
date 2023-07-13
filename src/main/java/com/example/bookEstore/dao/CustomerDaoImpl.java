@@ -2,7 +2,6 @@ package com.example.bookEstore.dao;
 
 import com.example.bookEstore.model.Customer;
 
-import java.util.List;
 
 import javax.sql.DataSource;
 
@@ -13,7 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 @Repository
 public class CustomerDaoImpl implements CustomerDao {
 	private final static String SQL_ADD_CUST = "insert into customer (fname,lname,addrs,email,pass)  values(?,?,?,?,?)";
-	private final static String SQL_SRCH_CUST = "select * from customer";
+	private final static String SQL_SRCH_CUST_BYEMAIL= "select pass from customer where email=?";
 
 	private JdbcTemplate jdbcTemplate;
 
@@ -31,10 +30,10 @@ public class CustomerDaoImpl implements CustomerDao {
 	}
 
 	@Override
-	public List<Customer> loginCustomer(String email, String pass) {
+	public String loginCustomer(String email, String pass) {
 		
-		List <Customer> customers = jdbcTemplate.query(SQL_SRCH_CUST, new CustomerMapper());
-	      return customers;
+		return jdbcTemplate.queryForObject(SQL_SRCH_CUST_BYEMAIL,String.class,email);
+	      
 	}
 
 }

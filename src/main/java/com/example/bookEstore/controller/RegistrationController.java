@@ -62,7 +62,7 @@ public class RegistrationController {
 		if(rs) {
 			HttpSession session= request.getSession();
 			session.setAttribute("email", email);
-			return "redirect:home";
+			return "redirect:/home";
 		}
 		return "loginfail";
 	}

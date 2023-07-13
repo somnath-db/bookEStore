@@ -21,8 +21,6 @@ public class CustomerServiceImpl implements CustomerService {
 	@Override
 	public int addCustomer(Customer customer) {
 		
-		
-
 		int noOfRow = customerDao.addCustomer(customer);
 		
 
@@ -32,18 +30,10 @@ public class CustomerServiceImpl implements CustomerService {
 	@Override
 	public Boolean loginCustomer(String email, String pass) {
 		
-		List<Customer> customers = customerDao.loginCustomer(email, pass);
+		String password = customerDao.loginCustomer(email, pass);
 		
-		for (Customer record : customers) {
-	         if(  record.getEmail().equals(email) && record.getPassword().equals(pass) ) {
-	        	 System.out.println(record.getEmail());
-	        	 System.out.println(record.getPassword());
-	        	 return true;
-	        	 }
-	        	 
-	     } 
-		
-		return false;
-	}
+		return password.equals(pass);
+	    	 
+	 }
 
 }
