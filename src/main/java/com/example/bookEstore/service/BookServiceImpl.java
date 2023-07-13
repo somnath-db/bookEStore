@@ -24,26 +24,16 @@ public class BookServiceImpl implements BookService {
 
 		List<Book> books = bookDao.searchBookByName(bookName);
 
-		List<Book> rsBookSet = new ArrayList<>();
-		for (Book record : books) {
-			if (record.getName().toLowerCase().contains(bookName.toLowerCase())) {
-				rsBookSet.add(record);
-			}
-		}
-		return rsBookSet;
+
+		return books;
 	}
 
 	@Override
 	public List<Book> searchBookByAuthor(String bookAuthor) {
 		List<Book> books = bookDao.searchBookByName(bookAuthor);
 
-		List<Book> rsBookSet = new ArrayList<>();
-		for (Book record : books) {
-			if (record.getAuthor().toLowerCase().contains(bookAuthor.toLowerCase())) {
-				rsBookSet.add(record);
-			}
-		}
-		return rsBookSet;
+	
+		return books;
 	}
 
 	@Override

@@ -13,8 +13,9 @@ import com.example.bookEstore.dao.BookMapper;
 
 @Repository
 public class BookDaoImpl implements BookDao {
-	private final static String SQL_SRCH_BOOK = "select * from book";
-
+	private final static String SQL_SHOW_ALL_BOOKS = "select * from book";
+	private final static String SQL_SRCH_BOOK_BY_NAME = "select * from book where bookname like concat('%',?,'%')";
+	private final static String SQL_SRCH_BOOK_BY_AUTHOR = "select * from book where author like concat('%',?,'%')";
 	private JdbcTemplate jdbcTemplate;
 
 	@Autowired
@@ -23,17 +24,17 @@ public class BookDaoImpl implements BookDao {
 	}
 	@Override
 	public List<Book> searchBookByName(String bookName) {
-		List <Book> books = jdbcTemplate.query(SQL_SRCH_BOOK, new BookMapper());
+		List <Book> books = jdbcTemplate.query(SQL_SRCH_BOOK_BY_NAME, new BookMapper(),bookName);
 	      return books;
 	}
 	@Override
 	public List<Book> searchBookByAuthor(String bookAuthor) {
-		List <Book> books = jdbcTemplate.query(SQL_SRCH_BOOK, new BookMapper());
+		List <Book> books = jdbcTemplate.query(SQL_SRCH_BOOK_BY_AUTHOR, new BookMapper(),bookAuthor);
 	      return books;
 	}
 	@Override
 	public List<Book> showAllBooks() {
-		List <Book> books = jdbcTemplate.query(SQL_SRCH_BOOK, new BookMapper());
+		List <Book> books = jdbcTemplate.query(SQL_SHOW_ALL_BOOKS, new BookMapper());
 	      return books;
 	}
 
