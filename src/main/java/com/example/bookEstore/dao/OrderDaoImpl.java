@@ -20,7 +20,9 @@ public class OrderDaoImpl implements OrderDao {
 	private final static String SQL_CANCEL_ITEM="delete from orderbook where email=? and orderdate=? and ordertime=? and barcode=?";
 	
 	private final static String SQL_UPDATE_QUANTITY1="select email,b.barcode,count(c.quantity) as q from book b inner join central_cart c on c.barcode=b.barcode group by b.barcode,email having c.email=?";
-	private final static String SQL_UPDATE_QUANTITY2="update book set quantity=quantity-? where barcode=? ";
+	private final static String SQL_UPDATE_QUANTITY_MINUS="update book set quantity=quantity-? where barcode=? ";
+	private final static String SQL_UPDATE_QUANTITY_PLUS="update book set quantity=quantity+? where barcode=? ";
+	private final static String SQL_UPDATE_QUANTITY_AFTER_ORDERCANCEL="select quantity from orderbook where email=? and orderdate=? and ordertime=? and barcode=?";
 			
 	private JdbcTemplate jdbcTemplate;
 
@@ -68,9 +70,15 @@ public class OrderDaoImpl implements OrderDao {
 																				return book;},email);
 		int noOfRow=0;
 		for(Book rs:books) {
-			noOfRow+=jdbcTemplate.update(SQL_UPDATE_QUANTITY2,rs.getQuantity(),rs.getBarcode());
+			noOfRow+=jdbcTemplate.update(SQL_UPDATE_QUANTITY_MINUS,rs.getQuantity(),rs.getBarcode());
 		}
 		return noOfRow;
+	}
+	@Override
+	public int updateQuantityAfterOrderCancel(String email, Date orderDate, String orderTime, String barcode) {
+		int quantity=jdbcTemplate.queryForObject(SQL_UPDATE_QUANTITY_AFTER_ORDERCANCEL,Integer.class,email,orderDate,orderTime,barcode);
+		
+		return jdbcTemplate.update(SQL_UPDATE_QUANTITY_PLUS,quantity,barcode);
 	}
 
 }

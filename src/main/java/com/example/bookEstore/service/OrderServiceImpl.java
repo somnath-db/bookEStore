@@ -39,7 +39,7 @@ public class OrderServiceImpl implements OrderService {
 	}
 	@Override
 	public int cancelItem(String email, Date orderDate, String orderTime, String barcode) {
-		
+		orderDao.updateQuantityAfterOrderCancel(email, orderDate, orderTime, barcode);
 		return orderDao.cancelItem(email, orderDate, orderTime, barcode);
 		
 	}
